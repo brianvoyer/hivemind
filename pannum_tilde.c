@@ -43,52 +43,19 @@ t_int *pannum_tilde_perform(t_int *w)
     t_sample *in2 = (t_sample *)(w[3]);
     t_sample *out1 = (t_sample *)(w[4]);
     t_sample *out2 = (t_sample *)(w[5]);
-
     int n = (int)(w[6]);
 
-    // t_sample f_pan (x->pannum_tilde<1)?1.0:(x->pannum_tilde>11)?11.0:x->pannum_tilde;
-    // Here I have utilized the current values output from the [scaleroute] Brian has put up on git.
-    // As it stands, 0 should give a full amplitude centered stereo location. A value of 1 should
-    // return a slightly left-panned but still "full amplitude" signal. A value of 2 should give the
-    // same except on the right side, and a 3 should give a centered but 1/4 amplitude signal.
     t_sample in;
-
     t_sample panning;
-
-
-
 
     while (n--)
     {
         in = *in1++;
         panning = *in2++;
 
-        // if(panning == 0)
-        // {
-        //     (*out1++) = in;
-        //     (*out2++) = in;
-        // }
-        // if(panning == 1)
-        // {
-        //     (*out1++) = in;
-        //     (*out2++) = in * .75;
-        // }
-        // if(panning == 2)
-        // {
-        //     (*out1++) = in * .75;
-        //     (*out2++) = in;
-        // }
-        // if(panning == 3)
-        // {
-        //     (*out1++) = in * .25;
-        //     (*out2++) = in * .25;
-        // }
-
-
-        //
+        // Linear panning scheme. Maps [0,3] to stereo field, right to left.
         (*out1++) = (panning / 3.0) * in;
         (*out2++) = ((3 - panning) / 3.0) * in;
-        //
     }
 
     return (w+7);
@@ -125,9 +92,7 @@ void pannum_tilde_free(t_pannum_tilde *x)
 void *pannum_tilde_new(t_floatarg f)
 {
     t_pannum_tilde *x = (t_pannum_tilde *)pd_new(pannum_tilde_class);
-    // x->pannum_tilde = f;
     x->f = f;
-    // x->x_in2 = floatinlet_new(&x->x_obj, &x->f);
     x->x_in2 = inlet_new(&x->x_obj, &x->x_obj.ob_pd, &s_signal, &s_signal); 
     x->x_out1 = outlet_new(&x->x_obj, &s_signal);
     x->x_out2 = outlet_new(&x->x_obj, &s_signal);
