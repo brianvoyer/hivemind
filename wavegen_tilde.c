@@ -672,5 +672,4 @@ void wavegen_tilde_setup(void)
   class_addmethod(wavegen_tilde_class, (t_method)wavegen_tilde_list_sqr, gensym("sqr"), A_GIMME, 0);
   class_addmethod(wavegen_tilde_class, (t_method)wavegen_tilde_list_tri, gensym("tri"), A_GIMME, 0);
 
-  post(version);
 }
