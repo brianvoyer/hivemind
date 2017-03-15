@@ -1,11 +1,10 @@
-#include <m_pd.h>
 #include <math.h>
 #include <string.h>
 #define TWOPI 6.2831853072
 #define MAX_AMPLITUDES 64
 static t_class *wavegen_tilde_class;
 
-char *version = "wavegen~ v1.0 by David Estes-Smargiassi";
+//char *version = "wavegen~ v1.0 by David Estes-Smargiassi";
 
 typedef struct _wavegen_tilde
 {

@@ -17,10 +17,13 @@ static char *emails  = "<destessm|jlau|epeters1|nregenau|bvoyer|awiggins@stevens
 //                root
 #include "scaleroute.c"
 
+// [wavgen~] - generates waves from MIDI pitches
+#include "wavegen_tilde.c"
 
 void hivemindgone_setup(void)
 {
   scaleroute_setup();
+  wavegen_tilde_setup();
   post(version);
   post(author);
   post(emails);
